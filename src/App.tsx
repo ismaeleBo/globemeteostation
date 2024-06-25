@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Background from "./components/Background";
+import "./styles.css";
+import { ThemeProvider, Typography } from "@mui/material";
+import { PaletteColors } from "./theme/palette";
+import { theme } from "./theme";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <ThemeProvider theme={theme}>
+      <Background>
+        <Typography
+          color={PaletteColors.TEXT_2}
+          variant="h2"
+          textAlign="center"
+          fontWeight={500}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          Hello!
+        </Typography>
+      </Background>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
