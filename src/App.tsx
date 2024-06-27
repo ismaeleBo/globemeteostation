@@ -4,13 +4,12 @@ import { Box, ThemeProvider, Typography } from "@mui/material";
 import { PaletteColors } from "./theme/palette";
 import { theme } from "./theme";
 import SearchBox from "./components/SearchBox";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 const App = () => {
-  const queryClient = new QueryClient();
-
   return (
-    <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Background>
           <Box gap={2} display="flex" flexDirection="column">
@@ -26,7 +25,7 @@ const App = () => {
           </Box>
         </Background>
       </ThemeProvider>
-    </QueryClientProvider>
+    </Provider>
   );
 };
 

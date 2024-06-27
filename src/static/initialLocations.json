@@ -1,0 +1,32 @@
+[
+  {
+    "id": 44915,
+    "lat": 45.4641943,
+    "lon": 9.1896346,
+    "label": "Milan, Lombardy, Italy"
+  },
+  {
+    "id": 39230,
+    "lat": 37.5023612,
+    "lon": 15.0873718,
+    "label": "Catania, Sicily, Italy"
+  },
+  {
+    "id": 65606,
+    "lat": 51.5074456,
+    "lon": -0.1277653,
+    "label": "London, Greater London, England, United Kingdom"
+  },
+  {
+    "id": 41485,
+    "lat": 41.8933203,
+    "lon": 12.4829321,
+    "label": "Rome, Roma, Lazio, Italy"
+  },
+  {
+    "id": 175905,
+    "lat": 40.7127281,
+    "lon": -74.0060152,
+    "label": "New York, United States"
+  }
+]

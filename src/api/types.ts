@@ -3,24 +3,31 @@ export interface Location {
   lon: number;
 }
 
-export interface GetCityQueryResponseItem {
+export interface GetLocationsQueryRawResponseItem {
   osm_id: number;
   display_name: string;
-  lat: string;
-  lon: string;
+  lat: number;
+  lon: number;
 }
 
-export type GetCityQueryResponse = GetCityQueryResponseItem[];
+export type GetLocationsQueryRawResponse = GetLocationsQueryRawResponseItem[];
 
-export interface CurrentLocationWeather {
+export interface GetLocationsQueryResponseItem {
+  id: number;
+  label: string;
+  lat: number;
+  lon: number;
+}
+
+export interface LocationWeather {
   temperature: number;
   windspeed: number;
   is_day: number;
   weathercode: number;
 }
 
-export interface GetWeatherQueryResponse {
-  current_weather: CurrentLocationWeather;
+export interface GetLocationWeatherQueryResponse {
+  current_weather: LocationWeather;
 }
 
 export interface GetLocationTimeQueryResponse {

@@ -1,28 +1,39 @@
 import { Autocomplete, TextField, Typography } from "@mui/material";
 import { PaletteColors } from "../../theme/palette";
-import useCitiesQuery from "../../api/hooks/useCitiesQuery";
+import { GetLocationsQueryResponseItem, Location } from "../../api/types";
+import { useLazyGetLocationsQuery } from "../../api";
+import initialLocations from "../../static/initialLocations.json";
 
-const SearchInput: React.FC = () => {
-  const { setSearchText, listOptions, isFetching, isError } = useCitiesQuery();
+interface SearchInputProps {
+  onSelectLocation: (location: Location) => void;
+}
+
+const SearchInput: React.FC<SearchInputProps> = ({ onSelectLocation }) => {
+  const [getLocationQuery, { data: listOptions, isFetching, isError }] =
+    useLazyGetLocationsQuery();
+
+  const initialOptions = initialLocations as GetLocationsQueryResponseItem[];
 
   return (
     <>
       <Autocomplete
         id="city-input"
         autoComplete
-        options={listOptions}
+        options={listOptions || initialOptions}
         sx={{ width: 300 }}
         loading={isFetching}
         loadingText={
           <Typography color={PaletteColors.TEXT}>Loading...</Typography>
         }
-        getOptionKey={(option: any) => option.id}
-        onChange={(_, option) => console.log(option)}
+        getOptionKey={(option) => option.id}
+        onChange={(_, option) =>
+          option && onSelectLocation({ lat: option.lat, lon: option.lon })
+        }
         renderInput={(params) => (
           <TextField
             {...params}
-            onChange={(e) => setSearchText(e.currentTarget.value)}
-            label="City"
+            onChange={(e) => getLocationQuery(e.currentTarget.value)}
+            label="Location"
             variant="outlined"
             sx={{
               "& .MuiOutlinedInput-root": {
@@ -57,7 +68,7 @@ const SearchInput: React.FC = () => {
       />
       {isError && (
         <Typography mt={2} color={PaletteColors.WARNING} variant="body1">
-          An error occurred, please retry
+          An error occurred, please try again
         </Typography>
       )}
     </>
