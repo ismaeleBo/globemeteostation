@@ -6,12 +6,16 @@ import { theme } from "./theme";
 import SearchBox from "./components/SearchBox";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import { useState } from "react";
+import { Conditions } from "./types";
 
 const App = () => {
+  const [conditions, setConditions] = useState<Conditions | undefined>();
+
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Background>
+        <Background conditions={conditions}>
           <Box gap={2} display="flex" flexDirection="column">
             <Typography
               color={PaletteColors.TEXT_2}
@@ -21,7 +25,7 @@ const App = () => {
             >
               Hello!
             </Typography>
-            <SearchBox />
+            <SearchBox setConditions={setConditions} />
           </Box>
         </Background>
       </ThemeProvider>

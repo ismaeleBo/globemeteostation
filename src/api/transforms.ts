@@ -1,15 +1,22 @@
 import {
   LocationWeather,
-  GetLocationWeatherQueryResponse,
   GetLocationsQueryResponseItem,
   GetLocationsQueryRawResponse,
   GetLocationsQueryRawResponseItem,
+  GetLocationWeatherRawQueryResponse,
 } from "./types";
 
 export const transformGetLocationWeatherQueryResponse = (
-  response: GetLocationWeatherQueryResponse
+  response: GetLocationWeatherRawQueryResponse
 ): LocationWeather => {
-  return response.current_weather;
+  const { is_day, weather_code, temperature_2m, rain } = response.current;
+
+  return {
+    isDay: Boolean(is_day),
+    weathercode: weather_code,
+    temperature: temperature_2m,
+    isRaining: Boolean(rain),
+  };
 };
 
 export const transformGetLocationsQueryResponse = (

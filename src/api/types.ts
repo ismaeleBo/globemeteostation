@@ -19,20 +19,29 @@ export interface GetLocationsQueryResponseItem {
   lon: number;
 }
 
+export interface RawLocationWeather {
+  temperature_2m: number;
+  is_day: number;
+  weather_code: number;
+  rain: number;
+}
+
 export interface LocationWeather {
   temperature: number;
-  windspeed: number;
-  is_day: number;
+  isDay: boolean;
   weathercode: number;
+  isRaining: boolean;
 }
 
-export interface GetLocationWeatherQueryResponse {
-  current_weather: LocationWeather;
+export interface GetLocationWeatherRawQueryResponse {
+  current: RawLocationWeather;
 }
 
-export interface GetLocationTimeQueryResponse {
+export interface LocationTime {
   countryName: string;
   regionName: string;
   cityName: string;
   formatted: string;
 }
+
+export type GetLocationTimeQueryResponse = LocationTime;

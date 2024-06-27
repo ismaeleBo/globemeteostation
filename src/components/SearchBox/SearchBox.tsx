@@ -7,8 +7,15 @@ import {
   useLazyGetLocationTimeQuery,
   useLazyGetLocationWeatherQuery,
 } from "../../api";
+import { mapConditionCode } from "../../static/mapConditionCode";
+import { useEffect, useMemo } from "react";
+import { Conditions } from "../../types";
 
-const SearchBox: React.FC = () => {
+interface SearchBoxProps {
+  setConditions: (conditions: Conditions) => void;
+}
+
+const SearchBox: React.FC<SearchBoxProps> = ({ setConditions }) => {
   const [
     getLocationWeatherQuery,
     {
@@ -17,19 +24,45 @@ const SearchBox: React.FC = () => {
       isError: isWeatherError,
     },
   ] = useLazyGetLocationWeatherQuery();
-
   const [
     getLocationTimeQuery,
     { data: locationTime, isFetching: isTimeFetching, isError: isTimeError },
   ] = useLazyGetLocationTimeQuery();
 
+  // Memoize loading and error states
+  const isLoading = useMemo(
+    () => isWeatherFetching || isTimeFetching,
+    [isWeatherFetching, isTimeFetching]
+  );
+  const isError = useMemo(
+    () => isWeatherError || isTimeError,
+    [isWeatherError, isTimeError]
+  );
+
+  // Memoize background color based on weather condition
+  const boxBackgroundColor = useMemo(() => {
+    if (locationWeather?.weathercode) {
+      const condition =
+        mapConditionCode[locationWeather.weathercode][
+          locationWeather.isDay ? "day" : "night"
+        ];
+      return condition.color;
+    }
+    return "#fff"; // Default background color
+  }, [locationWeather]);
+
+  // Effect to set conditions when locationWeather updates
+  useEffect(() => {
+    if (locationWeather) {
+      const { isDay, isRaining } = locationWeather;
+      setConditions({ isDay, isRaining });
+    }
+  }, [locationWeather, setConditions]);
+
   const handleResearch = (location: Location) => {
     getLocationWeatherQuery(location);
     getLocationTimeQuery(location);
   };
-
-  const isLoading = isWeatherFetching || isTimeFetching;
-  const isError = isWeatherError || isTimeError;
 
   return (
     <Card
@@ -39,6 +72,7 @@ const SearchBox: React.FC = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: boxBackgroundColor,
       }}
     >
       <Typography
@@ -61,12 +95,8 @@ const SearchBox: React.FC = () => {
           An error occurred, please try again
         </Typography>
       )}
-      {locationTime && locationWeather && (
-        <SearchResult
-          cityName={`${locationTime.cityName}, ${locationTime.countryName}`}
-          temperature={locationWeather.temperature.toString()}
-          date={locationTime.formatted}
-        />
+      {!isLoading && !isError && locationTime && locationWeather && (
+        <SearchResult time={locationTime} weather={locationWeather} />
       )}
     </Card>
   );

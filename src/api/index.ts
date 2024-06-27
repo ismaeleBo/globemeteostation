@@ -33,7 +33,7 @@ export const weatherApi = createApi({
   endpoints: (builder) => ({
     getLocationWeather: builder.query<LocationWeather, Location>({
       query: (location) =>
-        `forecast?latitude=${location.lat}&longitude=${location.lon}&current_weather=true`,
+        `forecast?latitude=${location.lat}&longitude=${location.lon}&current=temperature_2m,is_day,rain,weather_code`,
       transformResponse: transformGetLocationWeatherQueryResponse,
     }),
   }),
