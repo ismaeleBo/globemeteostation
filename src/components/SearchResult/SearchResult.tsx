@@ -63,9 +63,11 @@ const SearchResult: React.FC<SearchResultProps> = ({ weather, time }) => {
           <Typography color={PaletteColors.TEXT} fontWeight={500} variant="h6">
             {day}
           </Typography>
-          <Typography color={PaletteColors.TEXT} fontWeight={500} variant="h6">
-            {hour.substring(0, hour.lastIndexOf(":"))}
-          </Typography>
+          {hour && (
+            <Typography color={PaletteColors.TEXT} fontWeight={500} variant="h6">
+              {hour.substring(0, hour.lastIndexOf(":"))}
+            </Typography>
+          )}
         </Box>
       </Box>
     </Box>
