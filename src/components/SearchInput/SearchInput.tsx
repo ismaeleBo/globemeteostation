@@ -3,6 +3,7 @@ import { PaletteColors } from "../../theme/palette";
 import { GetLocationsQueryResponseItem, Location } from "../../api/types";
 import { useLazyGetLocationsQuery } from "../../api";
 import initialLocations from "../../static/initialLocations.json";
+import GenericErrorMessage from "../GenericErrorMessage";
 
 interface SearchInputProps {
   onSelectLocation: (location: Location) => void;
@@ -20,7 +21,12 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSelectLocation }) => {
         id="city-input"
         autoComplete
         options={listOptions || initialOptions}
-        sx={{ width: 300 }}
+        sx={(theme) => ({
+          width: "100%",
+          [theme.breakpoints.up("md")]: {
+            width: 300,
+          },
+        })}
         loading={isFetching}
         loadingText={
           <Typography color={PaletteColors.TEXT}>Loading...</Typography>
@@ -66,11 +72,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSelectLocation }) => {
           />
         )}
       />
-      {isError && (
-        <Typography mt={2} color={PaletteColors.WARNING} variant="body1">
-          An error occurred, please try again
-        </Typography>
-      )}
+      {isError && <GenericErrorMessage />}
     </>
   );
 };

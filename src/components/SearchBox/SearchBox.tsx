@@ -10,6 +10,7 @@ import {
 import { mapConditionCode } from "../../static/mapConditionCode";
 import { useEffect, useMemo } from "react";
 import { Conditions } from "../../types";
+import GenericErrorMessage from "../GenericErrorMessage";
 
 interface SearchBoxProps {
   setConditions: (conditions: Conditions) => void;
@@ -90,12 +91,8 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setConditions }) => {
           <CircularProgress color="success" />
         </Box>
       )}
-      {isError && (
-        <Typography mt={2} color={PaletteColors.WARNING} variant="body1">
-          An error occurred, please try again
-        </Typography>
-      )}
-      {!isLoading && !isError && locationTime && locationWeather && (
+      {isError && <GenericErrorMessage />}
+      {locationTime && locationWeather && (
         <SearchResult time={locationTime} weather={locationWeather} />
       )}
     </Card>

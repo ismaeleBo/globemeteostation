@@ -3,6 +3,9 @@ import React from "react";
 import { PaletteColors } from "../../theme/palette";
 import { LocationTime, LocationWeather } from "../../api/types";
 import { mapConditionCode } from "../../static/mapConditionCode";
+import DeviceThermostatIcon from "@mui/icons-material/DeviceThermostat";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 interface SearchResultProps {
   weather: LocationWeather;
@@ -54,19 +57,45 @@ const SearchResult: React.FC<SearchResultProps> = ({ weather, time }) => {
             fontWeight={500}
             variant="h5"
             mb={2}
+            textAlign="right"
           >
             {condition.description}
           </Typography>
-          <Typography color={PaletteColors.TEXT} variant="body1" mb={2}>
-            {temperature}
-          </Typography>
-          <Typography color={PaletteColors.TEXT} fontWeight={500} variant="h6">
-            {day}
-          </Typography>
-          {hour && (
-            <Typography color={PaletteColors.TEXT} fontWeight={500} variant="h6">
-              {hour.substring(0, hour.lastIndexOf(":"))}
+          <Box display="flex" alignItems="center" mb={2} gap={0.5}>
+            <Typography
+              color={PaletteColors.TEXT}
+              variant="h4"
+              fontWeight="bold"
+              textAlign="right"
+            >
+              {temperature}°C
             </Typography>
+            <DeviceThermostatIcon />
+          </Box>
+
+          <Box display="flex" alignItems="center" mb={2} gap={0.5}>
+            <Typography
+              color={PaletteColors.TEXT}
+              fontWeight={500}
+              variant="h6"
+              textAlign="right"
+            >
+              {day}
+            </Typography>
+            <CalendarMonthIcon />
+          </Box>
+          {hour && (
+            <Box display="flex" alignItems="center" mb={2} gap={0.5}>
+              <Typography
+                color={PaletteColors.TEXT}
+                fontWeight={500}
+                variant="h6"
+                textAlign="right"
+              >
+                {hour.substring(0, hour.lastIndexOf(":"))}
+              </Typography>
+              <AccessTimeIcon />
+            </Box>
           )}
         </Box>
       </Box>
