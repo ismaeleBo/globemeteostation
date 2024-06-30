@@ -23,7 +23,7 @@ export interface RawLocationWeather {
   temperature_2m: number;
   is_day: number;
   weather_code: number;
-  rain: number;
+  precipitation: number;
 }
 
 export interface LocationWeather {

@@ -12,7 +12,7 @@ export const makeItRain = () => {
     // Couple random numbers to use for various randomizations
     const randoHundo = Math.floor(Math.random() * 98) + 1;
     const randoFiver = Math.floor(Math.random() * 4) + 2;
-    // Increment
+
     increment += randoFiver;
 
     // Add in a new raindrop with various randomizations to certain CSS properties
@@ -40,8 +40,4 @@ export const makeItRain = () => {
   if (backRow) {
     backRow.innerHTML = backDrops;
   }
-
-  const background = document.querySelector(".background");
-
-  background?.classList.toggle("splat-toggle");
 };

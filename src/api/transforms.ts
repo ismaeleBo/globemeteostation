@@ -9,13 +9,14 @@ import {
 export const transformGetLocationWeatherQueryResponse = (
   response: GetLocationWeatherRawQueryResponse
 ): LocationWeather => {
-  const { is_day, weather_code, temperature_2m, rain } = response.current;
+  const { is_day, weather_code, temperature_2m, precipitation } =
+    response.current;
 
   return {
     isDay: Boolean(is_day),
     weathercode: weather_code,
     temperature: temperature_2m,
-    isRaining: Boolean(rain),
+    isRaining: Boolean(precipitation),
   };
 };
 
