@@ -56,6 +56,12 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setConditions }) => {
   useEffect(() => {
     if (locationWeather) {
       const { isDay, isRaining } = locationWeather;
+
+      // This is a forcing of the isRain flag that I would have liked to avoid,
+      // but sometimes the mm of rain returned by the api are incompatible with actual weather conditions
+      if (locationWeather.weathercode > 48) {
+        return setConditions({ isDay, isRaining: true });
+      }
       setConditions({ isDay, isRaining });
     }
   }, [locationWeather, setConditions]);
